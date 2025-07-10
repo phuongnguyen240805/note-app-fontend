@@ -1,0 +1,62 @@
+.wrapper {
+    border: 1px solid;
+    transition: transform 0.2s ease;
+}
+
+.wrapper:hover {
+    transform: translateY(-2px);
+}
+
+.note-card {
+    height: 50px;
+    padding: 12px;
+    background-color: #fffde7; // vàng nhạt (đang làm)
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.primary {
+    border-radius: 10px;
+    background-color: #fffef0;
+    border-color: #fde68a;
+    box-shadow: 0 2px 6px rgba(255, 215, 64, 0.1);
+}
+
+.primary:hover {
+    background-color: #fffde6;
+    border-color: #facc15;
+}
+
+.secondary {
+    border-radius: 10px;
+    background-color: #e0f7fa;
+    border-color: #67e8f9;
+    box-shadow: 0 2px 6px rgba(14, 165, 233, 0.08);
+}
+
+.secondary:hover {
+    background-color: #ccfbf1;
+    border-color: #22d3ee;
+}
+
+/* Hành động */
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actions .btn {
+    min-width: unset;
+    padding: unset;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s;
+
+    :hover {
+        transform: scale(1.15);
+    }
+}

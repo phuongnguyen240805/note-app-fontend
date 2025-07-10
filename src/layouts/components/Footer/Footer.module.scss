@@ -1,48 +1,31 @@
-.header {
-    background-color: #fff3cd;
-    /* vàng cam nhạt */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
-}
+.footer {
+  background: linear-gradient(to right, #fffde7, #fff9c4, #fff3b0);
+  border-top: 1px solid #e5e7eb;
+  padding: 24px 0;
+  text-align: center;
+  margin-top: 64px;
+  font-size: 14px;
+  color: #6b7280;
 
-.wrapper {
-    height: 70px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 16px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+  .highlight {
+    color: #f59e0b;
+    font-weight: 600;
+  }
 
-.logo {
-    height: 60px;
-    width: 120px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #fb923c;
-    /* cam đậm */
-}
+  .subtext {
+    font-size: 12px;
+    color: #9ca3af;
+    font-style: italic;
+    margin-top: 6px;
+    letter-spacing: 0.3px;
+  }
 
-.logo-img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
+  @media (max-width: 600px) {
+    padding: 16px 12px;
+    font-size: 13px;
 
-.nav {
-    display: flex;
-}
-
-.link {
-    color: #374151;
-    /* gray-700 */
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s, transform 0.2s;
-}   
-
-.link:hover {
-    color: #22d3ee;
-    /* cyan-400 */
-    transform: translateY(-2px);
+    .subtext {
+      font-size: 11px;
+    }
+  }
 }
