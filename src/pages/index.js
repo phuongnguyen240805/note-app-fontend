@@ -1,2 +1,3 @@
-export { default as HomePage } from "./Home/Home";
-export { default as AboutPage } from "./About/About";
+export { default as HomePage } from "./Home";
+export { default as AddNotePage } from "./AddNote";
+export { default as UpdatePage } from "./Update";
