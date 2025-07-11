@@ -22,7 +22,7 @@ function NoteItem({
 
     return (
         <div className={classes}>
-            <div key={note.id} className={cx('note-card', { [type]: type })}>
+            <div key={note._id} className={cx('note-card', { [type]: type })}>
                 <span className={cx('note-text')}>{note.text}</span>
                 {
                     completed ? (

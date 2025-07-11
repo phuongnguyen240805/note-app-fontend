@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import styles from './AddNote.module.scss';
 import Button from '~/components/Button';
@@ -10,24 +10,20 @@ const cx = classNames.bind(styles);
 
 function AddNote() {
 
-    const datas = [
-        {
-            id: 1,
-            text: "phuong"
-        },
-        {
-            id: 2,
-            text: "thu"
-        },
-        {
-            id: 3,
-            text: "thi"
-        },
-    ];
-
-    const [notes, setNotes] = useState(datas);
+    const [notes, setNotes] = useState([]);
     const [text, setText] = useState('');
     const inputRef = useRef();
+
+    useEffect(() => {
+        fetch('http://localhost:3030/api/notes')
+            .then((res) => res.json())
+            .then((data) => {
+                setNotes(data);
+            })
+            .catch((err) => {
+                console.error('Lỗi khi fetch notes:', err);
+            });
+    }, []);
 
     const handleAddNote = () => {
         if (!text.trim()) return;
@@ -73,7 +69,7 @@ function AddNote() {
                 ) : (
                     notes.map((note) => (
                         <div
-                            key={note.id}
+                            key={note._id}
                             className={cx('note')}
                         >
                             {note.text}
