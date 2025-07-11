@@ -2,19 +2,16 @@ import classNames from "classnames/bind";
 import PropTypes from 'prop-types';
 
 import styles from './Box.module.scss';
-import NoteItem from "~/components/NoteItem";
 
 const cx = classNames.bind(styles);
 
 function Box({
-    notes,
-    title,
-    empty,
+    children,
     type,
+    title,
     leftIcon,
     rightIcon,
     className,
-    completed=false,
 }) {
 
     const classes = cx('wrapper', {
@@ -29,29 +26,16 @@ function Box({
                 <span>{title}</span>
                 {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
             </h3>
-            <div className={cx('note-list')}>
-                {notes.filter((n) => !n.completed).length === 0 ? (
-                    <p className={cx('empty')}>{empty}</p>
-                ) : (
-                    notes
-                        .filter((n) => !n.completed)
-                        .map((note) => (
-                            <NoteItem 
-                                completed={completed}
-                                note={note}
-                                type={type}
-                            />
-                        ))
-                )}
-            </div>
+            {children}
         </div>
     );
 }
 
 Box.propTypes = {
-    notes: PropTypes.node.isRequired,
-    primary: PropTypes.bool,
-    secondary: PropTypes.bool,
+    children: PropTypes.node.isRequired,
+    title: PropTypes.string,
+    type: PropTypes.string,
+    className: PropTypes.string,
     leftIcon: PropTypes.node,
     rightIcon: PropTypes.node,
 };

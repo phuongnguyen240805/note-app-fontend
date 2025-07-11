@@ -51,11 +51,10 @@ function NoteItem({
 }
 
 NoteItem.propTypes = {
-    notes: PropTypes.node.isRequired,
-    primary: PropTypes.bool,
-    secondary: PropTypes.bool,
-    leftIcon: PropTypes.node,
-    rightIcon: PropTypes.node,
+    note: PropTypes.node.isRequired,
+    className: PropTypes.string,
+    type: PropTypes.string,
+    completed: PropTypes.bool,
 };
 
 export default NoteItem;

@@ -1,8 +1,9 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import styles from './AddNote.module.scss';
 import Button from '~/components/Button';
+import Box from '~/components/Box';
 
 
 const cx = classNames.bind(styles);
@@ -26,11 +27,14 @@ function AddNote() {
 
     const [notes, setNotes] = useState(datas);
     const [text, setText] = useState('');
+    const inputRef = useRef();
 
     const handleAddNote = () => {
         if (!text.trim()) return;
         setNotes([{ id: Date.now(), text }, ...notes]);
         setText('');
+
+        inputRef.current.focus();
     };
 
     return (
@@ -40,15 +44,16 @@ function AddNote() {
                 <h2 className={cx('form-title')}>+ Thêm ghi chú</h2>
                 <div className={cx('form-row')}>
                     <input
+                        ref={inputRef}
                         type="text"
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder="Nhập nội dung ghi chú..."
                         className={cx('input')}
                     />
-                    <Button 
-                    onClick={handleAddNote} 
-                    className={cx('button')}
+                    <Button
+                        onClick={handleAddNote}
+                        className={cx('button')}
                     >
                         Thêm
                     </Button>
@@ -56,20 +61,26 @@ function AddNote() {
             </div>
 
             {/* Danh sách ghi chú */}
-            <div className={cx('note-list')}>
-                <h3 className={cx('form-title')}>📒 Ghi chú gần đây:</h3>
+            <Box
+                type="primary"
+                title="📒 Ghi chú gần đây:"
+                className={cx('note-list')}
+            >
                 {notes.length === 0 ? (
                     <p style={{ fontStyle: 'italic', color: '#999' }}>
                         Chưa có ghi chú nào.
                     </p>
                 ) : (
                     notes.map((note) => (
-                        <div key={note.id} className={cx('note')}>
+                        <div
+                            key={note.id}
+                            className={cx('note')}
+                        >
                             {note.text}
                         </div>
                     ))
                 )}
-            </div>
+            </Box>
         </div>
     );
 }

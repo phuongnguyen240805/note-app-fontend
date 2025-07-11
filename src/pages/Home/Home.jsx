@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 
 import styles from './Home.module.scss';
 import Box from '~/components/Box';
-
+import NoteItem from '~/components/NoteItem';
 
 const cx = classNames.bind(styles);
 
@@ -12,7 +12,7 @@ function Home() {
     const datas = [
         {
             id: 1,
-            text: "phuong"
+            text: "phuong fullstack web devoloper"
         },
         {
             id: 2,
@@ -38,19 +38,47 @@ function Home() {
                 {/* Cột trái - Ghi chú đang làm */}
                 <Box
                     type="primary"
-                    notes={notes}
                     title="📌 Ghi chú đang làm."
-                    empty="Không có ghi chú nào."
-                />
+                >
+                    <div className={cx('note-list')}>
+                        {notes.filter((n) => !n.completed).length === 0 ? (
+                            <p className={cx('empty')}>Không có ghi chú nào.</p>
+                        ) : (
+                            notes
+                                .filter((n) => !n.completed)
+                                .map((note) => (
+                                    <NoteItem
+                                        key={note.id}
+                                        note={note}
+                                        type="primary"
+                                    />
+                                ))
+                        )}
+                    </div>
+                </Box>
 
                 {/* Cột phải - Ghi chú đã làm */}
                 <Box
                     type="secondary"
-                    notes={notes}
                     title="✅ Đã hoàn thành"
-                    empty="Chưa có ghi chú nào được hoàn thành."
-                    completed
-                />
+                >
+                    <div className={cx('note-list')}>
+                        {notes.filter((n) => !n.completed).length === 0 ? (
+                            <p className={cx('empty')}>Chưa có ghi chú nào được hoàn thành.</p>
+                        ) : (
+                            notes
+                                .filter((n) => !n.completed)
+                                .map((note) => (
+                                    <NoteItem
+                                        key={note.id}
+                                        note={note}
+                                        type="secondary"
+                                        completed
+                                    />
+                                ))
+                        )}
+                    </div>
+                </Box>
             </div>
 
         </div>

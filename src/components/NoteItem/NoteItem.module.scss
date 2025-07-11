@@ -1,14 +1,14 @@
 .wrapper {
     border: 1px solid;
     transition: transform 0.2s ease;
-}
 
-.wrapper:hover {
-    transform: translateY(-2px);
+    &:hover {
+        transform: translateY(-2px);
+    }
 }
 
 .note-card {
-    height: 50px;
+    min-height: 50px;
     padding: 12px;
     background-color: #fffde7; // vàng nhạt (đang làm)
     display: flex;
@@ -63,9 +63,9 @@
     font-size: 18px;
     cursor: pointer;
     text-decoration: none;
-    transition: transform 0.2s;
+    transition: transform 0.2s ease;
 
-    :hover {
+    &:hover {
         transform: scale(1.15);
     }
 }

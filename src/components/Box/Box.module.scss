@@ -46,7 +46,6 @@
     }
 }
 
-/* Ghi chú */
 .section-title {
     font-size: 16px;
     color: #fb923c;
@@ -58,18 +57,4 @@
     width: 20px;
     display: inline-block;
     text-align: center;
-}
-
-.note-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-/* Rỗng */
-.empty {
-    color: #9ca3af;
-    font-style: italic;
-    font-size: 14px;
-    padding-left: 8px;
 }
