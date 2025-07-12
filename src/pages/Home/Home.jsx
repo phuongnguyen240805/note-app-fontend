@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import Box from '~/components/Box';
 import NoteItem from '~/components/NoteItem';
+import request from '~/utils/request';
 
 const cx = classNames.bind(styles);
 
@@ -12,14 +13,16 @@ function Home() {
     const [notes, setNotes] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3030/api/notes')
-            .then((res) => res.json())
-            .then((data) => {
-                setNotes(data);
-            })
-            .catch((err) => {
+        async function getNotes() {
+            try {
+                const response = await request.get('/');
+                setNotes(response.data);
+            } catch (err) {
                 console.error('Lỗi khi fetch notes:', err);
-            });
+            }
+        }
+
+        getNotes();
     }, []);
 
     return (

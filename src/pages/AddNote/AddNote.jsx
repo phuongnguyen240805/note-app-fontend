@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './AddNote.module.scss';
 import Button from '~/components/Button';
 import Box from '~/components/Box';
+import request from '~/utils/request';
+import { addNote } from '~/services';
 
 
 const cx = classNames.bind(styles);
@@ -14,23 +16,30 @@ function AddNote() {
     const [text, setText] = useState('');
     const inputRef = useRef();
 
+    // get notes
     useEffect(() => {
-        fetch('http://localhost:3030/api/notes')
-            .then((res) => res.json())
-            .then((data) => {
-                setNotes(data);
-            })
-            .catch((err) => {
+        async function getNotes() {
+            try {
+                const response = await request.get('/');
+                setNotes(response.data);
+            } catch (err) {
                 console.error('Lỗi khi fetch notes:', err);
-            });
-    }, []);
+            }
+        }
 
-    const handleAddNote = () => {
+        getNotes();
+    }, [text]);
+
+    const handleAddNote = async () => {
         if (!text.trim()) return;
-        setNotes([{ id: Date.now(), text }, ...notes]);
-        setText('');
 
-        inputRef.current.focus();
+        try {
+            await addNote(text);  // Gửi POST request tại đây
+            setText('');          // Xóa input sau khi thêm thành công (nếu cần)
+            inputRef.current.focus();
+        } catch (err) {
+            console.error('Lỗi khi thêm note:', err);
+        };
     };
 
     return (
