@@ -4,8 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './AddNote.module.scss';
 import Button from '~/components/Button';
 import Box from '~/components/Box';
-import request from '~/utils/request';
-import { addNote } from '~/services';
+import { addNote, getNotes } from '~/services';
 
 
 const cx = classNames.bind(styles);
@@ -18,16 +17,16 @@ function AddNote() {
 
     // get notes
     useEffect(() => {
-        async function getNotes() {
+        async function getAllNotes() {
             try {
-                const response = await request.get('/');
-                setNotes(response.data);
+                const response = await getNotes();
+                setNotes(response);
             } catch (err) {
                 console.error('Lỗi khi fetch notes:', err);
             }
         }
 
-        getNotes();
+        getAllNotes();
     }, [text]);
 
     const handleAddNote = async () => {

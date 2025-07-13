@@ -9,26 +9,49 @@ const request = axios.create({
 
 // get method config
 const get = async (api, options = {}) => {
-    const res = await request.get(api, options);
+    try {
+        const res = await request.get(api, options);
 
-    return res.data;
+        return res.data;
+    } catch (error) {
+        throw new Error('loi gui get: ' + error.message);
+    }
 };
 
 // post method config
 const post = async (api, data = {}) => {
-    return await request.post(api, data);
+    try {
+        return await request.post(api, data);
+    } catch (error) {
+        throw new Error('loi gui post: ' + error.message);
+    }
 };
 
+// put method config
 const put = async (api, data = {}) => {
-    return await request.put(api, data);
+    try {
+        return await request.put(api, data);
+    } catch (error) {
+        throw new Error('loi gui put: ' + error.message);
+    }
 };
 
+// patch method config
 const patch = async (api, data = {}) => {
-    return await request.patch(api, data);
+    try {
+        return await request.patch(api, data);
+    } catch (error) {
+        throw new Error('loi gui patch: ' + error.message);
+    }
 };
 
+// del method config
 const del = async (api, config = {}) => {
-    return await request.delete(api, config); // data thường truyền qua `config.data` nếu cần
+    try {
+        return await request.delete(api, config);
+    } catch (error) {
+        throw new Error('loi gui delete: ' + error.message);
+    }
 };
 
 export { get, post, put, patch, del };

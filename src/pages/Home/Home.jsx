@@ -1,29 +1,62 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './Home.module.scss';
 import Box from '~/components/Box';
 import NoteItem from '~/components/NoteItem';
-import request from '~/utils/request';
+import { getNotes, deleteNote, patchNote } from '~/services';
+import { NoteContext } from '~/hooks/NoteContext';
+
 
 const cx = classNames.bind(styles);
 
 function Home() {
 
     const [notes, setNotes] = useState([]);
+    const { selectedNoteId, setSelectedNoteId } = useContext(NoteContext);
 
-    useEffect(() => {
-        async function getNotes() {
-            try {
-                const response = await request.get('/');
-                setNotes(response.data);
-            } catch (err) {
-                console.error('Lỗi khi fetch notes:', err);
-            }
+    // Fetch all notes
+    const getAllNotes = useCallback(async () => {
+        try {
+            const response = await getNotes();
+            setNotes(response);
+        } catch (err) {
+            console.error('Lỗi khi fetch notes:', err);
         }
-
-        getNotes();
     }, []);
+
+    // Xoá note
+    const handleDeleteNote = useCallback(async (id) => {
+        try {
+            await deleteNote(id);
+            await getAllNotes(); // Fetch lại
+            setSelectedNoteId(null); // Reset lại state
+        } catch (err) {
+            console.error('Lỗi khi xoá note:', err);
+        }
+    }, [getAllNotes, setSelectedNoteId]);
+
+    // Load notes lần đầu
+    useEffect(() => {
+        getAllNotes();
+    }, [getAllNotes]);
+
+    // Nếu có selectedNoteId thì xoá
+    useEffect(() => {
+        if (selectedNoteId) {
+            handleDeleteNote(selectedNoteId);
+        }
+    }, [selectedNoteId, handleDeleteNote]);
+
+    const handleComplete = async (id) => {
+        await patchNote(id, { isCompleted: true });
+        await getAllNotes();
+    };
+
+    const handleRestore = async (id) => {
+        await patchNote(id, { isCompleted: false });
+        await getAllNotes();
+    };
 
     return (
         <div className={cx('container')}>
@@ -52,6 +85,7 @@ function Home() {
                                         key={note._id}
                                         note={note}
                                         type="primary"
+                                        onComplete={handleComplete}
                                     />
                                 ))
                         )}
@@ -75,6 +109,7 @@ function Home() {
                                         note={note}
                                         type="secondary"
                                         completed
+                                        onRestore={handleRestore}
                                     />
                                 ))
                         )}

@@ -4,38 +4,46 @@ import classNames from 'classnames/bind';
 
 import styles from './Update.module.scss';
 import Button from '~/components/Button';
+import { getNoteById, updateNote } from '~/services';
 
 const cx = classNames.bind(styles);
-
-// Giả lập dữ liệu notes (nếu chưa dùng API/backend)
-const fakeNotes = [
-    { id: '1', text: 'Ghi chú A', completed: false },
-    { id: '2', text: 'Ghi chú B', completed: true },
-];
 
 function Update() {
     const { id } = useParams();
     const navigate = useNavigate();
-
-    const [note, setNote] = useState(fakeNotes);
     const [text, setText] = useState('');
 
+    // get note text
     useEffect(() => {
-        const found = fakeNotes.find((n) => n.id === id);
-        if (found) {
-            setNote(found);
-            setText(found.text);
-        }
+        async function getNote() {
+            try {
+                const data = await getNoteById(id);
+                setText(data?.text);
+            } catch (err) {
+                console.error('Lỗi khi fetch note theo ID:', err);
+            }
+        };
+
+        if (id) getNote();
     }, [id]);
 
+    // handle update data
     const handleSave = () => {
         if (!text.trim()) return;
-        // Xử lý lưu logic tại đây (API hoặc state)
-        console.log('Cập nhật note:', { ...note, text });
-        navigate('/'); // Quay về trang chính
+
+        async function updateNoteById() {
+            try {
+                return await updateNote(id, text);
+            } catch (err) {
+                console.error('Lỗi khi fetch note theo ID:', err);
+            }
+        };
+
+        if (id) updateNoteById();
+        navigate('/');
     };
 
-    if (!note) return <p className={cx('not-found')}>Không tìm thấy ghi chú.</p>;
+    // if (!note) return <p className={cx('not-found')}>Không tìm thấy ghi chú.</p>;
 
     return (
         <div className={cx('container')}>

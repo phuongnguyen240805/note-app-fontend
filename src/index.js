@@ -4,12 +4,15 @@ import ReactDOM from 'react-dom/client';
 import App from '~/App';
 import GlobalStyle from '~/components/GlobalStyle';
 import reportWebVitals from './reportWebVitals';
+import { NoteProvider } from './hooks/NoteContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalStyle>
-      <App />
+      <NoteProvider>
+        <App />
+      </NoteProvider>
     </GlobalStyle>
   </React.StrictMode>
 );
