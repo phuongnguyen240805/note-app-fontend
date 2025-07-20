@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-    baseURL: 'http://localhost:3030/api/notes',
+    baseURL: 'https://note-app-api-1myr.onrender.com/api/notes',
     headers: {
         'Content-Type': 'application/json',
     },
