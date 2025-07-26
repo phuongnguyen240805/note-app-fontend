@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-    baseURL: 'https://note-app-api-1myr.onrender.com/api/notes',
+    baseURL: 'https://note-app-api-1myr.onrender.com/api/note-app',
     headers: {
         'Content-Type': 'application/json',
     },
